@@ -33,7 +33,7 @@ namespace Streaming.Controllers
 
 
         [HttpGet("loadFile")]
-        public FileResult LoadFile([FromQuery] string file)
+        public FileResult LoadFile([FromQuery] string file, int from, int to)
         {
             var filepath = $"Audio\\{file}";
             var bytes = System.IO.File.ReadAllBytes(filepath);
@@ -50,7 +50,7 @@ namespace Streaming.Controllers
             //}
             //await reader.ReadAsync(buffer, 0, length);
 
-            var buffer = TrimMp3(filepath, "", TimeSpan.FromSeconds(30), TimeSpan.FromSeconds(55));
+            var buffer = TrimMp3(filepath, "", TimeSpan.FromSeconds(from), TimeSpan.FromSeconds(to));
 
             //var file = new File(buffer., "audio/mpeg");
 

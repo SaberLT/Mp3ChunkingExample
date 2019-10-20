@@ -29,7 +29,9 @@ export class AppComponent implements OnInit {
 
   public loadStream = () => {
     let params = {
-      file: "djip.mp3"
+      file: "djip.mp3",
+      from: "60",
+      to: "65"
     }
 
     this.http.get(this.baseUrl+"api/audio/loadFile", {
@@ -39,6 +41,7 @@ export class AppComponent implements OnInit {
       this.file = result;
       console.log(result);
       var promise = this.audioContext.decodeAudioData(result, (buff) => {
+        this.source = this.audioContext.createBufferSource();
         this.source.buffer = buff;
         this.source.connect(this.audioContext.destination);
         this.source.start();
@@ -67,7 +70,6 @@ export class AppComponent implements OnInit {
     // this.source = this.audioContext.createBufferSource();
 
     this.audioContext = new (window['AudioContext'] || window['webkitAudioContext']);
-    this.source = this.audioContext.createBufferSource();
 
     console.log('Gesture complete!');
   }
