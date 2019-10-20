@@ -65,17 +65,20 @@ namespace Streaming.Controllers
             using (var writer = new MemoryStream())
             {
                 Mp3Frame frame;
+                
                 while ((frame = reader.ReadNextFrame()) != null)
                     if (reader.CurrentTime >= begin || !begin.HasValue)
                     {
-                        if (reader.CurrentTime <= end || !end.HasValue)
+                        if (reader.CurrentTime < end || !end.HasValue)
                             writer.Write(frame.RawData, 0, frame.RawData.Length);
                         else break;
                     }
 
                 return writer;
             }
-
+            //two methods: first loads data from needed seconds,
+            //    second loads data by frame timer.
+            // watch carefull on this.source.buffer.duration+
         }
 
     }
